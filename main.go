@@ -22,8 +22,8 @@ func main() {
 
 	user := models.CreateUser(nil, nil)
 	restos := models.CreateRestaurants(1000)
-	ut := behaviour.NewUserTracker(user)
-	tagger := behaviour.NewRestaurantTagger(ut, restos)
+	ut := behaviour.NewUserTracker(user)                // For Debugging. We can remove if want
+	tagger := behaviour.NewRestaurantTagger(ut, restos) // For Debugging. We can remove if want
 
 	result := GetRestaurantRecommendations(user, restos)
 

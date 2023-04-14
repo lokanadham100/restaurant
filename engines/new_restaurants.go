@@ -22,16 +22,22 @@ func (_ *newRestaurants) GetDisplayCount() int {
 
 func (nr *newRestaurants) GetRestaurantIds(_ behaviour.RestaurantTagger, restaurants []models.Restaurant, respCh chan<- []string) {
 	temp := make([]models.Restaurant, len(restaurants))
-	resp := make([]string, len(restaurants))
-	for i := 0; i < len(restaurants); i++ {
-		temp[i] = restaurants[i]
-	}
-	for i := 0; i < len(temp); i++ {
+	resp := make([]string, nr.GetDisplayCount())
+
+	copy(temp, restaurants)
+
+	for i := 0; i < nr.GetDisplayCount(); i++ {
 		maxIndex := i
 		for j := i + 1; j < len(temp); j++ {
-			if temp[j].OnboardedTime().After(temp[maxIndex].OnboardedTime()) {
-				maxIndex = j
+			if temp[j].Rating() < temp[maxIndex].Rating() {
+				continue
 			}
+
+			if (temp[j].Rating() == temp[maxIndex].Rating()) && temp[j].OnboardedTime().Before(temp[maxIndex].OnboardedTime()) {
+				continue
+			}
+
+			maxIndex = j
 		}
 		temp[i], temp[maxIndex] = temp[maxIndex], temp[i]
 		resp[i] = temp[i].RestaurantId()
