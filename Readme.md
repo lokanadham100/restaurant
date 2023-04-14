@@ -2,6 +2,7 @@
 
 ## Instructions
 ```
+git clone https://github.com/lokanadham100/restaurant
 cd restaurant
 go run .
 ```
