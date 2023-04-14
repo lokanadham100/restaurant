@@ -1,6 +1,8 @@
 package engines
 
 import (
+	"fmt"
+
 	"github.com/lokanadham100/restaurant/behaviour"
 	"github.com/lokanadham100/restaurant/models"
 )
@@ -43,6 +45,7 @@ func (nr *newRestaurants) GetRestaurantIds(_ behaviour.RestaurantTagger, restaur
 		resp[i] = temp[i].RestaurantId()
 	}
 
+	fmt.Println("new Restos: ", resp)
 	respCh <- resp
 	close(respCh)
 }
